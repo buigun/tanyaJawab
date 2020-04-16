@@ -14,10 +14,10 @@ app.get('/questions', (req, res) => {
     Question.findAll({
         order: [['id','ASC']]
     })
-    .then(products=>{
+    .then(questions=>{
         res.status(200).json({
-            message: 'Get product list success',
-            products
+            message: 'Get questions list success',
+            questions
         })
     })
     .catch(err=>{

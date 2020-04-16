@@ -2,7 +2,7 @@
   <div class="my-container">
     <div class="title-question">
       <img class="mb-4" style="width:100px" src="../assets/piala.png">
-      <h1>Scores</h1>
+      <h1>Your score: {{skor}}</h1>
     </div>
     <div>
       <h4>Congratulations to the winner, see you next time ...</h4>
@@ -22,6 +22,7 @@ export default {
     return {
 
     }
-  }
+  },
+  props: ['skor']
 }
 </script>

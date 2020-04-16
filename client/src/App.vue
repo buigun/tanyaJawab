@@ -2,7 +2,7 @@
   <div id="app">
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
-    <Questions v-if="screen === 'questions'"></Questions>
+    <Questions :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
     <Scores v-if="screen === 'scores'"></Scores>
     <footer>
       <p class="text-center">Created by Buigun, Jes, Anandapuja</p>
@@ -22,6 +22,11 @@ export default {
       screen: 'welcome'
     }
   },
+  computed: {
+    question() {
+      return this.$store.state.question
+    }
+  },
   components: {
     Questions,
     Scores,
@@ -30,7 +35,15 @@ export default {
   methods: {
     registerSubmit: function(){
       this.screen = 'questions'
+    },
+    getScore() {
+      this.screen = 'scores'
+      console.log('lebih')
     }
+  }
+  ,
+  created() {
+    this.$store.dispatch("getQuestion");
   }
 }
 </script>

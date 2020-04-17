@@ -78,6 +78,14 @@ io.on('connection', function (socket) {
         io.emit('players',users)
         io.emit('screenEnd','questions')
     })
+
+    socket.on('reset', function() {
+        users = []
+        status = false
+        io.emit('reset','welcome')
+        io.emit('players',users)
+        io.emit('statusGame',false)
+    })
   });
 
 http.listen(port, () => console.log(`Listening on port ${port}!`));

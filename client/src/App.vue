@@ -11,7 +11,7 @@
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
     <Questions @gameStatus="gameStatus" @stopGame="stopGame" @updateScore="updateScore" :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
-    <Scores :skor="score" v-if="screen === 'scores'" @rematch="rematch"></Scores>
+    <Scores :skor="score" v-if="screen === 'scores'" @rematch="rematch" @reset="reset"></Scores>
     <footer>
       <p class="text-center">Created by Buigun, Jes, Anandapuja</p>
     </footer>
@@ -23,7 +23,8 @@ import Questions from './components/Questions.vue'
 import Scores from './components/Scores.vue'
 import Welcome from './components/Welcome.vue'
 import io from 'socket.io-client'
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('https://limitless-retreat-68299.herokuapp.com');
+// http://localhost:3000
 
 export default {
   name: 'App',
@@ -57,7 +58,7 @@ export default {
         localStorage.setItem('player',player)
     },
     gameStatus(){
-        socket.emit('statusGame',true);
+      socket.emit('statusGame',true);
     },
     getScore(score) {
       this.score = score
@@ -69,6 +70,10 @@ export default {
     },
     stopGame(){
       socket.emit('statusGame',false)
+    },
+    reset(){
+      localStorage.clear()
+      socket.emit('reset')
     }
   }
   ,
@@ -94,6 +99,11 @@ export default {
     socket.on('screenEnd',(data)=>{
       console.log(data)
       this.screen = data
+    })
+
+    socket.on('reset',(data)=>{
+      this.screen = data
+      localStorage.clear()
     })
   }
 }

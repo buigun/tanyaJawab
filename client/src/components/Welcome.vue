@@ -8,7 +8,7 @@
     </div>
     <div class="welcome mt-3">
       <form @submit.prevent="registerSubmit">
-        <input type="text" placeholder="Your name here ..." required>
+        <input v-model="player" type="text" placeholder="Your name here ..." required>
         <button class="btn btn-success percent-50 mt-3">JOIN GAME!</button>
       </form>
     </div>
@@ -20,12 +20,12 @@ export default {
   name: 'Welcome',
   data(){
     return {
-
+      player: ""
     }
   },
   methods: {
     registerSubmit: function(){
-      this.$emit('registerSubmit')
+      this.$emit('registerSubmit', this.player)
     }
   }
 }

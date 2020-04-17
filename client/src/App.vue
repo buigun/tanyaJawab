@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    <p>{{$store.state.players}}</p>
+    <p>{{$store.state.status}}</p>
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
-    <Questions :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
+    <Questions @gameStatus="gameStatus" @stopGame="stopGame" @updateScore="updateScore" :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
     <Scores :skor="score" v-if="screen === 'scores'" @rematch="rematch"></Scores>
     <footer>
       <p class="text-center">Created by Buigun, Jes, Anandapuja</p>
@@ -14,13 +16,17 @@
 import Questions from './components/Questions.vue'
 import Scores from './components/Scores.vue'
 import Welcome from './components/Welcome.vue'
+import io from 'socket.io-client'
+const socket = io.connect('http://localhost:3000');
 
 export default {
   name: 'App',
   data(){
     return {
       screen: 'welcome',
-      score: 0
+      score: 0,
+      player: '',
+      players: []
     }
   },
   computed: {
@@ -34,8 +40,18 @@ export default {
     Welcome
   },
   methods: {
-    registerSubmit: function(){
+    updateScore(score){
+      socket.emit('updateScore', {name: localStorage.getItem('player'), score: score})
+      console.log(score)
+    },
+    registerSubmit: function(player){
       this.screen = 'questions'
+        socket.emit('playerName', { player: player });
+        console.log(player)
+        localStorage.setItem('player',player)
+    },
+    gameStatus(){
+        socket.emit('statusGame',true);
     },
     getScore(score) {
       this.score = score
@@ -43,11 +59,30 @@ export default {
     },
     rematch(){
       this.screen = 'welcome'
+    },
+    stopGame(){
+      socket.emit('statusGame',false)
     }
   }
   ,
   created() {
-    this.$store.dispatch("getQuestion");
+    this.$store.dispatch("getQuestion")
+
+    if (localStorage.getItem('player')) {
+      this.screen = 'questions'
+      socket.emit('ambilData')
+    }
+
+    socket.on('players',(data)=>{
+      this.players.push(data)
+      console.log(data)
+      this.$store.commit('SET_PLAYERS',data)
+    })
+
+    socket.on('statusGame',(data)=>{
+      this.$store.commit('SET_STATUS',data)
+      console.log(data)
+    })
   }
 }
 </script>

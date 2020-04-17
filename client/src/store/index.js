@@ -5,11 +5,19 @@ import axios from 'axios'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        question: ""
+        question: "",
+        players: [],
+        status: false,
     },
     mutations: {
         SET_QUESTIONS(state, payload) {
             state.question = payload
+        },
+        SET_PLAYERS(state, payload) {
+            state.players = payload
+        },
+        SET_STATUS(state, payload) {
+            state.status = payload
         }
     },
     actions: {

@@ -1,7 +1,11 @@
 <template>
   <div>
-    <button class="btn btn-success" @click="start">Start</button>
-    <button class="btn btn-success" @click="stop">Pause</button>
+<div class="container-start">
+      <div class="choose-one">
+        <button class="btn btn-success percent-50" @click="start">Start</button>
+        <button class="btn btn-danger percent-50" @click="stop">Pause</button>
+      </div>
+    </div>
   <div class="my-container" v-if="index < data.length && $store.state.status">
     <div class="title-question">
       <h1>Answer this questions please</h1>

@@ -17,6 +17,7 @@
       </tr>
     </table>
     <button class="btn btn-success percent-50" style="margin: 0 auto" @click="rematch">Rematch</button>
+    <button class="btn btn-danger percent-50" style="margin: 0 auto" @click="reset">Reset</button>
     <audio autoplay id="playAudio">
       <source src="../assets/yeay.mp3">
     </audio>
@@ -36,6 +37,9 @@ export default {
     rematch() {
       this.$emit('rematch')
     },
+    reset() {
+      this.$emit('reset')
+    }
   },
   computed: {
     highScore() {

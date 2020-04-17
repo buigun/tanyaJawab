@@ -23,7 +23,8 @@ const store = new Vuex.Store({
     actions: {
         getQuestion({commit}) {
             axios({
-                url: `http://localhost:3000/questions`,
+                // url: 'http://localhost:3000/questions',
+                url: `https://limitless-retreat-68299.herokuapp.com/questions`,
                 method: 'get',
             })
             .then(response=>{

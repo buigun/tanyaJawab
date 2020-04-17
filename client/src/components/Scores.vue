@@ -6,14 +6,18 @@
     <div>
       <h4>Congratulations to the winner, see you next time ...</h4>
     </div>
-    <table>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
       <tr v-for="(player,index) in highScore" :key="index">
         <td>{{player.name}}</td>
         <td>{{player.score}}</td>
       </tr>
     </table>
     <button class="btn btn-success percent-50" style="margin: 0 auto" @click="rematch">Rematch</button>
-    <audio autoplay loop  id="playAudio">
+    <audio autoplay id="playAudio">
       <source src="../assets/yeay.mp3">
     </audio>
   </div>
@@ -39,8 +43,6 @@ export default {
 
       for (let i = 1; i < var1.length; i++) {
         for (let j = 0; j < i; j++) {
-          console.log(var1[j])
-          console.log(var1[i])
 
           if (var1[j].score < var1[i].score) {
             let temp = var1[j]

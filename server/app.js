@@ -65,6 +65,19 @@ io.on('connection', function (socket) {
         console.log(data)
         io.emit('players',users)
     })
+
+    socket.on('end', function(data){
+        console.log(data)
+        io.emit('screenEnd',data)
+    })
+
+    socket.on('rematch', function(){
+        for (let i = 0; i < users.length; i++) {
+            users[i].score = 0
+        }
+        io.emit('players',users)
+        io.emit('screenEnd','questions')
+    })
   });
 
 http.listen(port, () => console.log(`Listening on port ${port}!`));

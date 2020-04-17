@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="btn btn-success" @click="start">Start</button>
-    <button class="btn btn-success" @click="stop">Stop</button>
+    <button class="btn btn-success" @click="stop">Pause</button>
   <div class="my-container" v-if="index < data.length && $store.state.status">
     <div class="title-question">
       <h1>Answer this questions please</h1>
@@ -52,6 +52,13 @@ export default {
         this.$emit('getScore',this.score)
       }
     },
+    // addIndex(value){
+    //   if(this.index < this.data.length-1){
+    //     this.index += 1
+    //   } else 
+    //   this.checkAnswer(value)
+    //   this.$emit('getScore',this.score)
+    // },
     checkAnswer(value){
         if (this.data[this.index].answer == value) {
           this.score += 1

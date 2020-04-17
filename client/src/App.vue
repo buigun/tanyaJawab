@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <p>{{$store.state.players}}</p>
-    <p>{{$store.state.status}}</p>
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
     <Questions @gameStatus="gameStatus" @stopGame="stopGame" @updateScore="updateScore" :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
@@ -56,9 +55,11 @@ export default {
     getScore(score) {
       this.score = score
       this.screen = 'scores'
+      socket.emit('end', 'scores')
     },
     rematch(){
-      this.screen = 'welcome'
+      this.screen = 'questions'
+      socket.emit('rematch')
     },
     stopGame(){
       socket.emit('statusGame',false)
@@ -82,6 +83,11 @@ export default {
     socket.on('statusGame',(data)=>{
       this.$store.commit('SET_STATUS',data)
       console.log(data)
+    })
+
+    socket.on('screenEnd',(data)=>{
+      console.log(data)
+      this.screen = data
     })
   }
 }

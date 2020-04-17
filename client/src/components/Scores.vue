@@ -1,18 +1,21 @@
 <template>
   <div class="my-container">
     <div class="title-question">
-      <img class="mb-4" style="width:100px" src="../assets/piala.png">
       <h1>Your score: {{skor}}</h1>
     </div>
     <div>
       <h4>Congratulations to the winner, see you next time ...</h4>
     </div>
-    <div class="space-around mt-3 mb-4">
-        <div class="score-round"><p>1</p></div>
-        <div class="score-round"><p>2</p></div>
-        <div class="score-round"><p>3</p></div>
-    </div>
+    <table>
+      <tr v-for="(player,index) in highScore" :key="index">
+        <td>{{player.name}}</td>
+        <td>{{player.score}}</td>
+      </tr>
+    </table>
     <button class="btn btn-success percent-50" style="margin: 0 auto" @click="rematch">Rematch</button>
+    <audio autoplay loop  id="playAudio">
+      <source src="../assets/yeay.mp3">
+    </audio>
   </div>
 </template>
 
@@ -21,13 +24,33 @@ export default {
   name: 'Scores',
   data(){
     return {
-
+      players: this.$store.state.players
     }
   },
   props: ['skor'],
   methods: {
     rematch() {
       this.$emit('rematch')
+    },
+  },
+  computed: {
+    highScore() {
+      let var1 = this.players 
+
+      for (let i = 1; i < var1.length; i++) {
+        for (let j = 0; j < i; j++) {
+          console.log(var1[j])
+          console.log(var1[i])
+
+          if (var1[j].score < var1[i].score) {
+            let temp = var1[j]
+            var1[j] = var1[i]
+            var1[i] = temp
+          }
+        }
+      }
+
+      return var1
     }
   },
 }

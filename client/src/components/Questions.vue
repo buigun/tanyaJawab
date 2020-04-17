@@ -26,34 +26,36 @@ export default {
   methods: {
     addIndexYes(){
       if (this.index < this.data.length-1) {
+        this.checkAnswerTrue()
         this.index += 1
-
-        if (this.data[this.index-1].answer == true) {
-          this.score += 1
-        } else {
-          this.score += 0
-        }
-
-        console.log(this.score)
       } else {
-        this.$emit('getScore')
+        this.checkAnswerTrue()
+        this.$emit('getScore',this.score)
       }
     },
     addIndexNo(){
       if (this.index < this.data.length-1) {
+        this.checkAnswerFalse()
         this.index += 1
-
-        if (this.data[this.index-1].answer == false) {
+      } else {
+        this.checkAnswerFalse()
+        this.$emit('getScore',this.score)
+      }
+    },
+    checkAnswerFalse(){
+        if (this.data[this.index].answer == false) {
           this.score += 1
         } else {
           this.score += 0
         }
-
-        console.log(this.score)
-      } else {
-        this.$emit('getScore')
-      }
     },
+    checkAnswerTrue(){
+        if (this.data[this.index].answer == true) {
+          this.score += 1
+        } else {
+          this.score += 0
+        }
+    }
   },
 }
 </script>

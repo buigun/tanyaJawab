@@ -2,7 +2,7 @@
   <div class="my-container">
     <div class="title-question">
       <img class="mb-4" style="width:100px" src="../assets/piala.png">
-      <h1>Scores</h1>
+      <h1>Your score: {{skor}}</h1>
     </div>
     <div>
       <h4>Congratulations to the winner, see you next time ...</h4>
@@ -12,6 +12,7 @@
         <div class="score-round"><p>2</p></div>
         <div class="score-round"><p>3</p></div>
     </div>
+    <button class="btn btn-success percent-50" style="margin: 0 auto" @click="rematch">Rematch</button>
   </div>
 </template>
 
@@ -22,6 +23,12 @@ export default {
     return {
 
     }
-  }
+  },
+  props: ['skor'],
+  methods: {
+    rematch() {
+      this.$emit('rematch')
+    }
+  },
 }
 </script>

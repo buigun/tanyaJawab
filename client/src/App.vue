@@ -3,7 +3,7 @@
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
     <Questions :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
-    <Scores v-if="screen === 'scores'"></Scores>
+    <Scores :skor="score" v-if="screen === 'scores'" @rematch="rematch"></Scores>
     <footer>
       <p class="text-center">Created by Buigun, Jes, Anandapuja</p>
     </footer>
@@ -19,7 +19,8 @@ export default {
   name: 'App',
   data(){
     return {
-      screen: 'welcome'
+      screen: 'welcome',
+      score: 0
     }
   },
   computed: {
@@ -36,9 +37,12 @@ export default {
     registerSubmit: function(){
       this.screen = 'questions'
     },
-    getScore() {
+    getScore(score) {
+      this.score = score
       this.screen = 'scores'
-      console.log('lebih')
+    },
+    rematch(){
+      this.screen = 'welcome'
     }
   }
   ,

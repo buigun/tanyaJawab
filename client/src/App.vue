@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <p>{{$store.state.players}}</p>
+    <div class="container-start">
+    <table class="table">
+      <tr v-for="(player,index) in $store.state.players" :key="index">
+        <td>{{player.name}}</td>
+        <td>{{player.score}}</td>
+      </tr>
+    </table>
+    </div>
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
     <Questions @gameStatus="gameStatus" @stopGame="stopGame" @updateScore="updateScore" :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
@@ -54,7 +61,6 @@ export default {
     },
     getScore(score) {
       this.score = score
-      this.screen = 'scores'
       socket.emit('end', 'scores')
     },
     rematch(){
@@ -150,5 +156,13 @@ body {
 .welcome {
   display: flex;
   flex-direction: column;
+}
+.container-start {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 0 0 30px 30px;
 }
 </style>

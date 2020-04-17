@@ -12,6 +12,7 @@
         <div class="score-round"><p>2</p></div>
         <div class="score-round"><p>3</p></div>
     </div>
+    <button class="btn btn-success percent-50" style="margin: 0 auto" @click="rematch">Rematch</button>
   </div>
 </template>
 
@@ -23,6 +24,11 @@ export default {
 
     }
   },
-  props: ['skor']
+  props: ['skor'],
+  methods: {
+    rematch() {
+      this.$emit('rematch')
+    }
+  },
 }
 </script>

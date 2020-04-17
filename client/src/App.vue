@@ -3,7 +3,7 @@
     <img style="width:400px;" alt="Vue logo" src="./assets/logo.png">
     <Welcome v-if="screen === 'welcome'" @registerSubmit="registerSubmit"></Welcome>
     <Questions :data="question" v-if="screen === 'questions'" @getScore="getScore"></Questions>
-    <Scores :skor="score" v-if="screen === 'scores'"></Scores>
+    <Scores :skor="score" v-if="screen === 'scores'" @rematch="rematch"></Scores>
     <footer>
       <p class="text-center">Created by Buigun, Jes, Anandapuja</p>
     </footer>
@@ -40,6 +40,9 @@ export default {
     getScore(score) {
       this.score = score
       this.screen = 'scores'
+    },
+    rematch(){
+      this.screen = 'welcome'
     }
   }
   ,
